@@ -21,6 +21,8 @@ struct ArticleList: Codable {
 
 struct Article: Codable {
     
+    let uuid = UUID()
+
     var author: String?
     
     var title: String?

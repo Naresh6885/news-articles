@@ -9,40 +9,41 @@ import Foundation
 
 enum HomeServiceRoute: ApiRoute {
     
-    case topNews
+    case topNews(Pagination)
     
     var method: ApiMethod {
         switch self {
-        case .topNews:
+        case .topNews(_):
             return .get
         }
     }
     
     var path: String {
         switch self {
-        case .topNews:
+        case .topNews(_):
             return "/v2/everything"
         }
     }
     
     var headers: [String : String]? {
         switch self {
-        case .topNews:
+        case .topNews(_):
             return nil
         }
     }
     
     var parameters: [String : Any]? {
         switch self {
-        case .topNews:
+        case .topNews(_):
             return nil
         }
     }
     
     var queryParams: [String : String]? {
         switch self {
-        case .topNews:
-            return ["q": "tesla"]
+        case .topNews(let Pagination):
+            return ["q": "tesla", "page":
+                        "\(Pagination.page)", "pageSize": "\(Pagination.pageSize)"]
         }
     }
 }

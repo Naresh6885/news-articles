@@ -15,13 +15,19 @@ struct HomeView: View {
         
         switch(store.viewState) {
         case .loading:
-            ProgressView()
-                .onAppear() {
-                    store.fetchData()
-                }
+            ZStack {
+                ProgressView()
+                    .onAppear() {
+                        store.fetchData()
+                    }
+            }
         case .renderData(let articleList):
-            List(articleList.articles ?? [], id: \.title) { article in
+            let list = articleList.articles ?? []
+            List(list, id: \.uuid) { article in
                 HomeViewListItem(article: article)
+                    .onAppear() {
+                        self.store.dataDidApear(for: article)
+                    }
             }
             .listStyle(.plain)
         case .showError(let message):
