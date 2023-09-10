@@ -15,16 +15,22 @@ final class HomeViewStore: ObservableObject {
         viewState = .loading
     }
     
-    func fetchData() async {
-        
-        viewState = .loading
-        
-        do {
-            self.viewState = .loading
-            let data = try await ApiService.shared.dataTask(route: HomeServiceRoute.topNews, responseType: ArticleList.self)
-            viewState = .renderData(data)
-        } catch {
-            self.viewState = .showError(error.localizedDescription)
+    func fetchData() {
+        Task {
+            self.set(state: .loading)
+            do {
+                self.set(state: .loading)
+                let data = try await ApiService.shared.dataTask(route: HomeServiceRoute.topNews, responseType: ArticleList.self)
+                self.set(state: .renderData(data))
+            } catch {
+                self.set(state: .showError(error.localizedDescription))
+            }
+        }
+    }
+    
+    private func set(state: ViewState<ArticleList>) {
+        DispatchQueue.main.async { [weak self] in
+            self?.viewState = state
         }
     }
 }

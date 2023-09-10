@@ -11,17 +11,7 @@ import SwiftUI
 struct NewsArticlesApp: App {
     var body: some Scene {
         WindowGroup {
-            HeadlineText(text: "Abc")
-                .onAppear() {
-                    Task {
-                        do {
-                            let data = try await ApiService.shared.dataTask(route: HomeServiceRoute.topNews, responseType: ArticleList.self)
-                            print(data)
-                        } catch {
-                            print(error)
-                        }
-                    }
-            }
+            HomeView().environmentObject(HomeViewStore())
         }
     }
 }

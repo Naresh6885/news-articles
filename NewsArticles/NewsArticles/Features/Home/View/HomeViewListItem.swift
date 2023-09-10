@@ -25,13 +25,14 @@ private enum HomeViewListItemColor: AppColorProvider {
 
 struct HomeViewListItem: View {
     @Environment(\.colorScheme) private var currentScheme
+    var article: Article
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            HeadlineText(text: "This is latest news")
-            StoryText(text: "This is story")
+            HeadlineText(text: article.title ?? "")
+            StoryText(text: article.story)
             HStack {
                 Spacer()
-                AuthorText(text: "written by - Naresh Kumar")
+                AuthorText(text: article.authorNameAndDate)
             }
             Divider()
                 .background(self.deviderColor())
@@ -46,8 +47,8 @@ struct HomeViewListItem: View {
     }
 }
 
-struct HomeViewListItem_Previews: PreviewProvider {
-    static var previews: some View {
-        HomeViewListItem()
-    }
-}
+//struct HomeViewListItem_Previews: PreviewProvider {
+//    static var previews: some View {
+//        HomeViewListItem()
+//    }
+//}

@@ -15,17 +15,13 @@ struct HomeView: View {
         
         switch(store.viewState) {
         case .loading:
-            Text("Loading....")
+            ProgressView()
                 .onAppear() {
-                    
+                    store.fetchData()
                 }
         case .renderData(let articleList):
-            
-            List {
-                HomeViewListItem()
-                HomeViewListItem()
-                HomeViewListItem()
-                HomeViewListItem()
+            List(articleList.articles ?? [], id: \.title) { article in
+                HomeViewListItem(article: article)
             }
             .listStyle(.plain)
         case .showError(let message):
