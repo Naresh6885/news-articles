@@ -11,7 +11,7 @@ struct NewsTabView: View {
     
     var body: some View {
         TabView {
-            HomeView()
+            HomeView().environmentObject(HomeViewStore())
                 .tabItem {
                     Label(TabItems.home.title, image: TabItems.home.icon)
                 }
